@@ -8,6 +8,9 @@ const server = new ApolloServer({
     resolvers,
     csrfPrevention: true,
     cache: "bounded",
+    cors: {
+        origin: ["http://localhost:3000"]
+      },
     plugins: [
         ApolloServerPluginLandingPageLocalDefault({embed: true}),
     ]

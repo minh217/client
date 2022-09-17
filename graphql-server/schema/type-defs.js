@@ -21,10 +21,12 @@ const typeDefs = gql`
         content: String
         created: String
         created_by: String
+        summary: String
     }
     type Query { 
         categories: [Category]
         news: [New]
+        newById(id: Int): New
     }
 `
 export {typeDefs};

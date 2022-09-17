@@ -1,15 +1,31 @@
 <template>
     <div>
-        <ul>
-            <li v-for="category in categories">
-                <button @click= "showNews(category.code)">{{category.name}}</button>
-            </li>
-        </ul>
-
+        <div style = "margin-top: 20px">
+            <ul class="list-group" >
+                <li @click= "showNews(category.news)" v-for="category in categories">
+                    <p>{{category.name}}</p>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <CardNew
+                v-if="hasNews"
+                v-for="(newItem, index) in newsList"
+                :key="index" 
+                :title="newItem.title"
+                :summary="newItem.summary"
+                :id="newItem.id"
+            />
+            <div v-if="!hasNews">
+                No Data
+            </div>
+            
+        </div>
     </div>
 </template>
 
 <script>
+    import "../common/css/index.css";
     import gql from 'graphql-tag'
 
     const GET_CATEGORIES_QUERY = gql`
@@ -19,6 +35,8 @@
                 name
                 news {
                     id
+                    title
+                    summary
                 }
             }
         }
@@ -33,11 +51,20 @@
         },
         data() {
             return {
-                newsList: []
+                newsList: [],
+                hasNews: false
             }
         },
         methods:{
-            
+            showNews(news){
+                if(news.length > 0){
+                    this.newsList =  news;
+                    this.hasNews = true;
+                }else {
+                    this.hasNews = false;
+                }
+                
+            }
         }
     }
 </script>

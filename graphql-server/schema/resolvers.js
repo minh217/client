@@ -11,12 +11,24 @@ const resolvers= {
         },
         categories: async() => {
             return await fetch(`${BASE_URL}${CHILD_URL.categories}`).then(res => res.json());
+        },
+        newById: async(parent, args) => {
+            return await fetch(`${BASE_URL}${CHILD_URL.news}/${args.id}`)
+            .then(res => {
+                if(res.status === 200)
+                {
+                    return res.json();
+                }else{
+                    return null;
+                }
+            });
         }
     },
     Category: {
         news: async (category) => {
-            console.log(`${BASE_URL}${CHILD_URL.news}/by-category/${category.id}`);
-            return await fetch(`${BASE_URL}${CHILD_URL.news}/by-category/${category.id}`).then(res => res.json())
+            
+            return await fetch(`${BASE_URL}${CHILD_URL.news}/by-category/${category.id}`)
+            .then(res => res.json())
         }
     }
 }
